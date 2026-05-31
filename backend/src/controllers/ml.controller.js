@@ -16,8 +16,7 @@ exports.predictDisease = async (req, res, next) => {
     });
 
     if (!response.ok) {
-      const errorMsg = await response.text();
-      return res.status(response.status).json({ success: false, message: `ML Service Error: ${errorMsg}` });
+      throw new Error(`ML Service responded with status ${response.status}`);
     }
 
     const data = await response.json();
@@ -45,8 +44,7 @@ exports.chatAssistant = async (req, res, next) => {
     });
 
     if (!response.ok) {
-      const errorMsg = await response.text();
-      return res.status(response.status).json({ success: false, message: `Chatbot Error: ${errorMsg}` });
+      throw new Error(`Chatbot Service responded with status ${response.status}`);
     }
 
     const data = await response.json();
